@@ -104,18 +104,29 @@ GPIO_InitTypeDef GPIO_InitStructure;
 	if( ( xRxedChars != serINVALID_QUEUE ) && ( xCharsForTx != serINVALID_QUEUE ) )
 	{
 		/* Enable USART2 clock */
-		RCC_APB2PeriphClockCmd( RCC_APB1Periph_USART2 | RCC_APB2Periph_GPIOA, ENABLE );	
+		//RCC_APB2PeriphClockCmd( RCC_APB1Periph_USART2 | RCC_APB2Periph_GPIOA, ENABLE );	
+		RCC_APB2PeriphClockCmd( RCC_APB1Periph_USART2 | RCC_APB2Periph_GPIOD, ENABLE );	
 
 		/* Configure USART2 Rx (PA3) as input floating */
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+		//GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+		//GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+		//GPIO_Init( GPIOA, &GPIO_InitStructure );
+		/* Configure USART2 Rx (PD6) as input floating */
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-		GPIO_Init( GPIOA, &GPIO_InitStructure );
+		GPIO_Init( GPIOD, &GPIO_InitStructure );
 		
 		/* Configure USART2 Tx (PA2) as alternate function push-pull */
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+		//GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+		//GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+		//GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+		//GPIO_Init( GPIOA, &GPIO_InitStructure );
+		/* Configure USART2 Tx (PD5) as alternate function push-pull */
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
 		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-		GPIO_Init( GPIOA, &GPIO_InitStructure );
+		GPIO_Init( GPIOD, &GPIO_InitStructure );
+		GPIO_PinRemapConfig(GPIO_Remap_USART2,ENABLE);
 
 		USART_InitStructure.USART_BaudRate = ulWantedBaud;
 		USART_InitStructure.USART_WordLength = USART_WordLength_8b;

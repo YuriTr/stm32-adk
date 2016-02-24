@@ -70,7 +70,7 @@
 //#define TRACE_MOD
 
 /**Enable 6-axis module  ACC+MAGNETOMETER */
-#define _6X
+//#define _6X
 
 /**Enable Gyroscope PR and Y */
 //#define  _GYRO_RPY
@@ -82,7 +82,7 @@
 
 
 /**Enable TEMPERATURE sensor */
-#define _TEMP
+//#define _TEMP
 /*Enable TEMPERATURE sensor */
 //#define OS_INT_ENABLE
 
