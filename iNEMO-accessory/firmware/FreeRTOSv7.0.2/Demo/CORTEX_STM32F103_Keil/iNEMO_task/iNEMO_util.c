@@ -27,13 +27,13 @@ xComPortHandle uartHandle;
 /* Turns iNEMO D3 led on */
 void ledOn(void)
 {
-	GPIO_WriteBit(GPIOB, GPIO_Pin_9, Bit_SET);
+	GPIO_WriteBit(GPIOC, GPIO_Pin_0, Bit_SET);
 }
 
 /* Turns iNEMO D3 led off */
 void ledOff(void)
 {
-	GPIO_WriteBit(GPIOB, GPIO_Pin_9, Bit_RESET);	
+	GPIO_WriteBit(GPIOC, GPIO_Pin_0, Bit_RESET);	
 }
 
 
@@ -126,6 +126,16 @@ void prvSetupHardware(void)
 	/* 2 wait states required on the flash. */
 	*( ( unsigned portLONG * ) 0x40022000 ) = 0x02;
 
+	#ifdef STM32F10X_CL
+	//PREDIV2 = 5, PLL2MUL=8, PREDIV1SRC=1, PREDIV1=5, PLL3MUL=8
+	RCC->CFGR2 = (4<<4) | (6<<8) | (1<<16) | (4<<0) | (6<<12);
+	//PLL2ON  PLL3ON
+	RCC->CR |= (1<<26) | (1<<28);
+	while(RCC_GetFlagStatus(RCC_FLAG_PLL2RDY) == RESET)
+	{
+	}
+	#endif
+	
 	/* HCLK = SYSCLK */
 	RCC_HCLKConfig( RCC_SYSCLK_Div1 );
 
@@ -149,7 +159,7 @@ void prvSetupHardware(void)
 #else
 #error "Please define either BOARD_IS_INEMOV2 or BOARD_IS_DISCOVERY"
 #endif
-
+  
 	/* Enable PLL. */
 	RCC_PLLCmd( ENABLE );
 
@@ -201,12 +211,12 @@ void gpiosInit(void)
 {
 	GPIO_InitTypeDef gpioInit;
 
-	/* Enable iNemo LED PB9 */
+	/* Enable iNemo LED PC0 */
 	GPIO_StructInit(&gpioInit);
-	gpioInit.GPIO_Pin = GPIO_Pin_9;
+	gpioInit.GPIO_Pin = GPIO_Pin_0;
 	gpioInit.GPIO_Mode = GPIO_Mode_Out_PP;
 	gpioInit.GPIO_Speed = GPIO_Speed_2MHz;
-	GPIO_Init(GPIOB, &gpioInit);
+	GPIO_Init(GPIOC, &gpioInit);
 
 	/* Enable PB0 for output */
 	GPIO_StructInit(&gpioInit);

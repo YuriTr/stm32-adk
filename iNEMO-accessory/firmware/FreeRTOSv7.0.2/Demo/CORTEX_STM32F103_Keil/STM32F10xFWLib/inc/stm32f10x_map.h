@@ -387,6 +387,25 @@ typedef struct
 } PWR_TypeDef;
 
 /*------------------------ Reset and Clock Controller ------------------------*/
+#ifdef STM32F10X_CL
+typedef struct
+{
+  vu32 CR;
+  vu32 CFGR;
+  vu32 CIR;
+  vu32 APB2RSTR;
+  vu32 APB1RSTR;
+  vu32 AHBENR;
+  vu32 APB2ENR;
+  vu32 APB1ENR;
+  vu32 BDCR;
+  vu32 CSR;
+
+  vu32 AHBRSTR;
+  vu32 CFGR2;	
+} RCC_TypeDef;
+
+#else
 typedef struct
 {
   vu32 CR;
@@ -400,7 +419,7 @@ typedef struct
   vu32 BDCR;
   vu32 CSR;
 } RCC_TypeDef;
-
+#endif
 /*------------------------ Real-Time Clock -----------------------------------*/
 typedef struct
 {

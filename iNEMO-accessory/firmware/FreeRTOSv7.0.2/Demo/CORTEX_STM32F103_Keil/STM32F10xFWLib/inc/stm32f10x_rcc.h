@@ -221,6 +221,10 @@ typedef struct
 #define RCC_FLAG_HSIRDY                  ((u8)0x20)
 #define RCC_FLAG_HSERDY                  ((u8)0x31)
 #define RCC_FLAG_PLLRDY                  ((u8)0x39)
+#ifdef STM32F10X_CL
+#define RCC_FLAG_PLL2RDY                 ((u8)0x3b)
+#define RCC_FLAG_PLL3RDY                 ((u8)0x3d)
+#endif
 #define RCC_FLAG_LSERDY                  ((u8)0x41)
 #define RCC_FLAG_LSIRDY                  ((u8)0x61)
 #define RCC_FLAG_PINRST                  ((u8)0x7A)
